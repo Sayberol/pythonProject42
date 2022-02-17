@@ -1,3 +1,5 @@
+from flask_restx import abort
+
 from project.dao.user import UserDAO
 from project.exceptions import ItemNotFound
 from project.schemas.user import UserSchema
@@ -20,14 +22,17 @@ class UsersService(BaseService):
         user = UserDAO(self._db_session).get_by_email(email)
         if not user:
             raise ItemNotFound
-        return UserSchema().dump(user)
+        return user
 
     def create(self, data_in):
+        user = UserDAO(self._db_session).get_by_email(data_in.get("email"))
+        if user:
+            abort(400, "Email already taken")
         user_pass = data_in.get("password")
         if user_pass:
             data_in["password"] = generate_password_digest(user_pass)
-        user = UserDAO(self._db_session).create(data_in)
-        return UserSchema().dump(user)
+        UserDAO(self._db_session).create(data_in)
+        return "User successfully created", 200
 
     def update(self, data_in):
         user = UserDAO(self._db_session).update(data_in)

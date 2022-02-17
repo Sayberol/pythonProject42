@@ -30,7 +30,14 @@ with app.app_context():
 
 with app.app_context():
     for movie in data["movies"]:
-        db.session.add(Movie(id=movie["pk"], title=movie["title"]))
+        db.session.add(Movie(id=movie["pk"],
+                             title=movie["title"],
+                             description=movie["description"],
+                             trailer=movie["trailer"],
+                             year=movie["year"],
+                             rating=movie["rating"],
+                             genre_id=movie["genre_id"],
+                             director_id=movie["director_id"]))
 
     try:
         db.session.commit()

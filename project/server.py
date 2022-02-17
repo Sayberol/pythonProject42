@@ -4,7 +4,8 @@ from flask_restx import Api
 
 from project.config import DevelopmentConfig, TestingConfig
 from project.setup_db import db
-from project.views import genres_ns
+from project.views import genres_ns, directors_ns, movies_ns, users_ns
+from project.views.auth import auth_ns
 
 api = Api(
     authorizations={
@@ -31,5 +32,9 @@ def create_app(DevelopmentConfig):
 
     # Регистрация эндпоинтов
     api.add_namespace(genres_ns)
+    api.add_namespace(directors_ns)
+    api.add_namespace(movies_ns)
+    api.add_namespace(users_ns)
+    api.add_namespace(auth_ns)
 
     return app

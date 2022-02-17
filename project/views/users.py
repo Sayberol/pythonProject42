@@ -23,7 +23,7 @@ class UsersView(Resource):
 class UserView(Resource):
     @auth_required
     @users_ns.response(200, "OK")
-    @users_ns.response(404, "Genre not found")
+    @users_ns.response(404, "User not found")
     def get(self, user_id: int):
         try:
             return UsersService(db.session).get_item_by_id(user_id)
@@ -46,7 +46,7 @@ class UserView(Resource):
 class UserPatchView(Resource):
     @auth_required
     @users_ns.response(200, "OK")
-    @users_ns.response(404, "Genre not found")
+    @users_ns.response(404, "User not found")
     def put(self, user_id: int):
         req_json = request.json
         password_1 = req_json.get("password_1")
