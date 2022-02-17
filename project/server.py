@@ -17,7 +17,7 @@ api = Api(
 cors = CORS()
 
 
-def create_app():
+def create_app(DevelopmentConfig):
     app = Flask(__name__, template_folder='../templates')
     app.config.from_object(DevelopmentConfig)
 
